@@ -3,17 +3,19 @@
     <h1 class="title">Projetos</h1>
 
     <form action="" @submit.prevent="saveProject">
-      <label for="project-name" class="label"></label>
-      <input
-        type="text"
-        name="project-name"
-        id="project-name"
-        class="input"
-        placeholder="Nome do projeto"
-        v-model="projectName"
-      />
       <div class="field">
-        <button class="button" type="submit">Save</button>
+        <label for="project-name" class="label"></label>
+        <input
+          type="text"
+          name="project-name"
+          id="project-name"
+          class="input"
+          placeholder="Nome do projeto"
+          v-model="projectName"
+        />
+      </div>
+      <div class="field">
+        <button class="button" type="submit">Salvar</button>
       </div>
     </form>
     <table class="table is-fullwidth">
