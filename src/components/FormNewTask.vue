@@ -10,10 +10,11 @@
           type="text"
           class="input"
           placeholder="Qual tarefa você deseja iniciar?"
+          v-model="task"
         />
       </div>
       <div class="column">
-        <Temporizer />
+        <Temporizer @onStop="endTask" />
       </div>
     </div>
   </div>
@@ -27,6 +28,18 @@ export default defineComponent({
   name: "form-new-task",
   components: {
     Temporizer,
+  },
+  data() {
+    return {
+      task: "",
+    };
+  },
+  methods: {
+    endTask(time: number): void {
+      console.log("Tempo da tarefa: ", time);
+      console.log("Descrição da tarefa: ", this.task);
+      this.task = "";
+    },
   },
 });
 </script>
