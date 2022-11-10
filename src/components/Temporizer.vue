@@ -1,22 +1,18 @@
 <template>
   <div class="is-flex is-align-items-center is-justify-content-space-between">
-    <section
-      class="is-flex is-align-items-center is-justify-content-space-between"
-    >
-      <Cronometer :time="time" />
-      <EventButton
-        :label="btnPlayLabel"
-        :icon="btnPlayIcon"
-        :disabled="isRunning"
-        @clicked="handlePlay"
-      />
-      <EventButton
-        :label="btnStopLabel"
-        :icon="btnStopIcon"
-        :disabled="!isRunning"
-        @clicked="handleStop"
-      />
-    </section>
+    <Cronometer :time="time" />
+    <EventButton
+      :label="btnPlayLabel"
+      :icon="btnPlayIcon"
+      :disabled="isRunning"
+      @clicked="handlePlay"
+    />
+    <EventButton
+      :label="btnStopLabel"
+      :icon="btnStopIcon"
+      :disabled="!isRunning"
+      @clicked="handleStop"
+    />
   </div>
 </template>
 

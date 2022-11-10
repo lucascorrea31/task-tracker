@@ -1,5 +1,5 @@
 <template>
-  <div class="box has-text-weight-bold">
+  <BoxVue>
     <div class="columns">
       <div class="column is-">
         <p>{{ task.description || "Tarefa sem descrição" }}</p>
@@ -8,18 +8,20 @@
         <Cronometer :time="task.time" />
       </div>
     </div>
-  </div>
+  </BoxVue>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import Cronometer from "@/components/Cronometer.vue";
 import ITask from "@/interfaces/ITask";
+import BoxVue from "./Box.vue";
 
 export default defineComponent({
   name: "form-task",
   components: {
     Cronometer,
+    BoxVue,
   },
   props: {
     task: {
@@ -31,8 +33,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.box {
-  background-color: #faf0ca;
-}
-</style>
+<style scoped></style>

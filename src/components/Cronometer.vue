@@ -1,5 +1,7 @@
 <template>
-  <strong>{{ timeFormatted }}</strong>
+  <section>
+    <strong class="display">{{ timeFormatted }}</strong>
+  </section>
 </template>
 
 <script lang="ts">
@@ -22,4 +24,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.display {
+  color: var(--textcolor-primary);
+}
+</style>
