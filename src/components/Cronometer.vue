@@ -1,7 +1,5 @@
 <template>
-  <section>
-    <strong>{{ timeFormatted }}</strong>
-  </section>
+  <strong>{{ timeFormatted }}</strong>
 </template>
 
 <script lang="ts">

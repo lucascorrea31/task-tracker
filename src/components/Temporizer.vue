@@ -1,35 +1,45 @@
 <template>
   <div class="is-flex is-align-items-center is-justify-content-space-between">
-    <Cronometer :time="time" />
-    <button class="button" @click="handlePlay" :disabled="isRunning">
-      <span class="icon">
-        <i class="fas fa-play"></i>
-      </span>
-      <span>Play</span>
-    </button>
-    <button class="button" @click="handleStop" :disabled="!isRunning">
-      <span class="icon">
-        <i class="fas fa-stop"></i>
-      </span>
-      <span>Stop</span>
-    </button>
+    <section
+      class="is-flex is-align-items-center is-justify-content-space-between"
+    >
+      <Cronometer :time="time" />
+      <EventButton
+        :label="btnPlayLabel"
+        :icon="btnPlayIcon"
+        :disabled="isRunning"
+        @clicked="handlePlay"
+      />
+      <EventButton
+        :label="btnStopLabel"
+        :icon="btnStopIcon"
+        :disabled="!isRunning"
+        @clicked="handleStop"
+      />
+    </section>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import Cronometer from "@/components/Cronometer.vue";
+import EventButton from "./EventButton.vue";
 
 export default defineComponent({
   name: "cron-temporizer",
   components: {
     Cronometer,
+    EventButton,
   },
   data() {
     return {
       time: 0,
       interval: 0,
       isRunning: false,
+      btnPlayLabel: "Play",
+      btnPlayIcon: "fas fa-play",
+      btnStopLabel: "Stop",
+      btnStopIcon: "fas fa-stop",
     };
   },
   methods: {
@@ -42,6 +52,9 @@ export default defineComponent({
     handleStop() {
       this.isRunning = false;
       clearInterval(this.interval);
+
+      this.$emit("onStop", this.time);
+      this.time = 0;
     },
   },
 });
