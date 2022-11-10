@@ -26,6 +26,7 @@ import Temporizer from "@/components/Temporizer.vue";
 
 export default defineComponent({
   name: "form-new-task",
+  emits: ["onEndTask"],
   components: {
     Temporizer,
   },
@@ -36,8 +37,10 @@ export default defineComponent({
   },
   methods: {
     endTask(time: number): void {
-      console.log("Tempo da tarefa: ", time);
-      console.log("Descrição da tarefa: ", this.task);
+      this.$emit("onEndTask", {
+        description: this.task,
+        time: time,
+      });
       this.task = "";
     },
   },
