@@ -1,7 +1,5 @@
 <template>
-  <section>
-    <strong class="display">{{ timeFormatted }}</strong>
-  </section>
+  <section><i class="far fa-clock"></i> {{ timeFormatted }}</section>
 </template>
 
 <script lang="ts">
@@ -24,8 +22,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.display {
-  color: var(--textcolor-primary);
-}
-</style>
+<style scoped></style>
