@@ -27,6 +27,7 @@ import EventButton from "./EventButton.vue";
 
 export default defineComponent({
   name: "cron-temporizer",
+  emits: ["onStop"],
   components: {
     Cronometer,
     EventButton,
@@ -43,16 +44,15 @@ export default defineComponent({
     };
   },
   methods: {
-    handlePlay() {
+    handlePlay(): void {
       this.isRunning = true;
       this.interval = setInterval(() => {
         this.time++;
       }, 1000);
     },
-    handleStop() {
+    handleStop(): void {
       this.isRunning = false;
       clearInterval(this.interval);
-
       this.$emit("onStop", this.time);
       this.time = 0;
     },
