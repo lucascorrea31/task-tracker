@@ -1,8 +1,11 @@
 <template>
   <BoxVue>
     <div class="columns">
-      <div class="column is-">
+      <div class="column is-4">
         <p>{{ task.description || "Tarefa sem descrição" }}</p>
+      </div>
+      <div class="column is-3">
+        {{ task.project?.name || "Projeto não definido" }}
       </div>
       <div class="column">
         <Cronometer :time="task.time" />

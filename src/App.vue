@@ -7,6 +7,7 @@
       <SideBar @clicked="changeTheme" />
     </div>
     <div class="column is-three-quarter content">
+      <NotificationsVue />
       <router-view />
     </div>
   </main>
@@ -15,11 +16,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import SideBar from "@/components/SideBar.vue";
+import NotificationsVue from "@/components/Notifications.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     SideBar,
+    NotificationsVue,
   },
   data() {
     return {

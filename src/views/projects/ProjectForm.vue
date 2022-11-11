@@ -23,6 +23,8 @@
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
 import { ADD_PROJECT, EDIT_PROJECT } from "@/store/mutations-type";
+import { NotificationType } from "@/interfaces/INotification";
+import useNotifier from "@/hooks/notifier";
 
 export default defineComponent({
   name: "projects-form-page",
@@ -56,13 +58,16 @@ export default defineComponent({
         this.store.commit(ADD_PROJECT, this.projectName);
       }
       this.projectName = "";
+      this.notify("Projeto salvo com sucesso!", NotificationType.SUCCESS);
       this.$router.push("/projects");
     },
   },
   setup() {
     const store = useStore();
+    const { notify } = useNotifier();
     return {
       store,
+      notify,
     };
   },
 });

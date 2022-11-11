@@ -20,7 +20,7 @@
             <option
               v-for="project in projects"
               :key="project.id"
-              value="{{ project.id }}"
+              :value="project.id"
             >
               {{ project.name }}
             </option>
@@ -39,6 +39,8 @@ import { defineComponent } from "vue";
 import Temporizer from "@/components/Temporizer.vue";
 import { useStore } from "@/store";
 import { computed } from "@vue/reactivity";
+import useNotifier from "@/hooks/notifier";
+import { NotificationType } from "@/interfaces/INotification";
 
 export default defineComponent({
   name: "form-new-task",
@@ -54,6 +56,18 @@ export default defineComponent({
   },
   methods: {
     endTask(time: number): void {
+      console.log(
+        this.task,
+        this.projectId,
+        this.projects.find((p) => p.id == this.projectId)
+      );
+      if (!this.task || !this.projects.find((p) => p.id == this.projectId)) {
+        this.notify(
+          "Você precisa preencher todos os campos",
+          NotificationType.ERROR
+        );
+        return;
+      }
       this.$emit("onEndTask", {
         description: this.task,
         time: time,
@@ -65,7 +79,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const { notify } = useNotifier();
     return {
+      store,
+      notify,
       projects: computed(() => store.state.projects),
     };
   },

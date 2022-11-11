@@ -12,6 +12,9 @@ import FormNewTask from "@/components/FormNewTask.vue";
 import Task from "@/components/Task.vue";
 import ITask from "@/interfaces/ITask";
 import BoxVue from "@/components/Box.vue";
+import { useStore } from "@/store";
+import { notificationMixin } from "@/mixins/NotificationMixin";
+import { NotificationType } from "@/interfaces/INotification";
 
 export default defineComponent({
   name: "tasks-page",
@@ -20,11 +23,7 @@ export default defineComponent({
     Task,
     BoxVue,
   },
-  data() {
-    return {
-      tasks: [] as ITask[],
-    };
-  },
+  mixins: [notificationMixin],
   computed: {
     isTasksEmpty(): boolean {
       return this.tasks.length === 0;
@@ -32,8 +31,16 @@ export default defineComponent({
   },
   methods: {
     addTask(task: ITask): void {
-      this.tasks.push(task);
+      this.store.commit("ADD_TASK", task);
+      this.notify("Tarefa adicionada com sucesso!", NotificationType.SUCCESS);
     },
+  },
+  setup() {
+    const store = useStore();
+    return {
+      store,
+      tasks: store.state.tasks,
+    };
   },
 });
 </script>
