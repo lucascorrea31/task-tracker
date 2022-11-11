@@ -1,6 +1,6 @@
 <template>
   <div class="is-flex is-align-items-center is-justify-content-space-between">
-    <Cronometer :time="time" />
+    <Cronometer :time="time || 0" />
     <EventButton
       :label="btnPlayLabel"
       :icon="btnPlayIcon"
