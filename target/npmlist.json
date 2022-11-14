@@ -1,0 +1,1 @@
+{"version":"0.1.0","name":"task-tracker","dependencies":{"@fortawesome/fontawesome-svg-core":{"version":"6.2.0"},"core-js":{"version":"3.26.0"},"global":{"version":"4.4.0"},"http-server":{"version":"14.1.1"},"json-server":{"version":"0.17.1"},"vue-router":{"version":"4.1.6"},"vue":{"version":"3.2.44"},"vuex":{"version":"4.0.2"}}}
