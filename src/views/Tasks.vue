@@ -15,6 +15,7 @@ import BoxVue from "@/components/Box.vue";
 import { useStore } from "@/store";
 import { notificationMixin } from "@/mixins/NotificationMixin";
 import { NotificationType } from "@/interfaces/INotification";
+import { GET_TASKS } from "@/store/actions-type";
 
 export default defineComponent({
   name: "tasks-page",
@@ -31,12 +32,14 @@ export default defineComponent({
   },
   methods: {
     addTask(task: ITask): void {
-      this.store.commit("ADD_TASK", task);
-      this.notify("Tarefa adicionada com sucesso!", NotificationType.SUCCESS);
+      this.store.dispatch("POST_TASK", task).then(() => {
+        this.notify("Tarefa adicionada com sucesso!", NotificationType.SUCCESS);
+      });
     },
   },
   setup() {
     const store = useStore();
+    store.dispatch(GET_TASKS);
     return {
       store,
       tasks: store.state.tasks,

@@ -22,7 +22,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
-import { ADD_PROJECT, EDIT_PROJECT } from "@/store/mutations-type";
+import { POST_PROJECT, PUT_PROJECT } from "@/store/actions-type";
 import { NotificationType } from "@/interfaces/INotification";
 import useNotifier from "@/hooks/notifier";
 
@@ -50,13 +50,19 @@ export default defineComponent({
   methods: {
     saveProject(): void {
       if (this.id) {
-        this.store.commit(EDIT_PROJECT, {
-          id: this.id,
-          name: this.projectName,
-        });
+        this.store
+          .dispatch(PUT_PROJECT, {
+            id: this.id,
+            name: this.projectName,
+          })
+          .then(() => this.reset());
       } else {
-        this.store.commit(ADD_PROJECT, this.projectName);
+        this.store
+          .dispatch(POST_PROJECT, this.projectName)
+          .then(() => this.reset());
       }
+    },
+    reset(): void {
       this.projectName = "";
       this.notify("Projeto salvo com sucesso!", NotificationType.SUCCESS);
       this.$router.push("/projects");
