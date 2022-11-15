@@ -2,6 +2,7 @@
 
 To test it, access: https://task-tracker-6c1r6mpy7-lucascorrea30.vercel.app/
 
+
 ## Project setup
 ```
 yarn install
@@ -10,6 +11,12 @@ yarn install
 ### Compiles and hot-reloads for development
 ```
 yarn serve
+```
+
+### Run local webserver to test all features
+Need to run json-server:
+```
+yarn json-server --watch db.json
 ```
 
 ### Compiles and minifies for production
