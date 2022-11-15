@@ -20,11 +20,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "@/store";
 import { POST_PROJECT, PUT_PROJECT } from "@/store/actions-type";
 import { NotificationType } from "@/interfaces/INotification";
 import useNotifier from "@/hooks/notifier";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "projects-form-page",
@@ -34,46 +35,41 @@ export default defineComponent({
       required: false,
     },
   },
-  mounted() {
-    if (this.id) {
-      const project = this.store.state.projects.find(
-        (proj) => proj.id == this.id
-      );
-      this.projectName = project?.name || "";
-    }
-  },
-  data() {
-    return {
-      projectName: "",
-    };
-  },
-  methods: {
-    saveProject(): void {
-      if (this.id) {
-        this.store
-          .dispatch(PUT_PROJECT, {
-            id: this.id,
-            name: this.projectName,
-          })
-          .then(() => this.reset());
-      } else {
-        this.store
-          .dispatch(POST_PROJECT, this.projectName)
-          .then(() => this.reset());
-      }
-    },
-    reset(): void {
-      this.projectName = "";
-      this.notify("Projeto salvo com sucesso!", NotificationType.SUCCESS);
-      this.$router.push("/projects");
-    },
-  },
-  setup() {
-    const store = useStore();
+  setup(props) {
     const { notify } = useNotifier();
+    const store = useStore();
+    const router = useRouter();
+    const projectName = ref("");
+
+    if (props.id) {
+      const project = store.state.project.projects.find(
+        (proj) => proj.id == props.id
+      );
+      projectName.value = project?.name || "";
+    }
+
+    const saveProject = () => {
+      if (props.id) {
+        store
+          .dispatch(PUT_PROJECT, {
+            id: props.id,
+            name: projectName.value,
+          })
+          .then(() => reset());
+      } else {
+        store.dispatch(POST_PROJECT, projectName.value).then(() => reset());
+      }
+    };
+
+    const reset = () => {
+      projectName.value = "";
+      notify("Projeto salvo com sucesso!", NotificationType.SUCCESS);
+      router.push("/projects");
+    };
+
     return {
-      store,
-      notify,
+      projectName,
+      saveProject,
     };
   },
 });
