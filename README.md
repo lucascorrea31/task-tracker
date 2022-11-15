@@ -1,6 +1,6 @@
 # Task Tracker
 
-To test it, access: https://task-tracker-6c1r6mpy7-lucascorrea30.vercel.app/
+To test it, access: https://task-tracker-lucascorrea30.vercel.app/#/
 
 
 ## Project setup
