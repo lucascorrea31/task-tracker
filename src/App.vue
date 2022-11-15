@@ -54,4 +54,8 @@ main.dark-mode {
   background-color: var(--bg-primary);
   color: var(--textcolor-primary);
 }
+
+.clickable {
+  cursor: pointer;
+}
 </style>
