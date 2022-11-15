@@ -10,7 +10,7 @@
           type="text"
           class="input"
           placeholder="Qual tarefa você deseja iniciar?"
-          v-model="task"
+          v-model="description"
         />
       </div>
       <div class="column is-3">
@@ -35,12 +35,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import Temporizer from "@/components/Temporizer.vue";
 import { useStore } from "@/store";
 import { computed } from "@vue/reactivity";
 import useNotifier from "@/hooks/notifier";
 import { NotificationType } from "@/interfaces/INotification";
+import { GET_PROJECTS } from "@/store/actions-type";
 
 export default defineComponent({
   name: "form-new-task",
@@ -48,42 +49,40 @@ export default defineComponent({
   components: {
     Temporizer,
   },
-  data() {
-    return {
-      task: "",
-      projectId: "",
-    };
-  },
-  methods: {
-    endTask(time: number): void {
-      console.log(
-        this.task,
-        this.projectId,
-        this.projects.find((p) => p.id == this.projectId)
-      );
-      if (!this.task || !this.projects.find((p) => p.id == this.projectId)) {
-        this.notify(
+  setup(props, { emit }) {
+    const store = useStore();
+    const { notify } = useNotifier();
+    const description = ref("");
+    const projectId = ref("");
+    const projects = computed(() => store.state.project.projects);
+
+    store.dispatch(GET_PROJECTS);
+
+    const endTask = (time: number): void => {
+      if (
+        !description.value ||
+        !projects.value.find((p) => p.id == projectId.value)
+      ) {
+        notify(
           "Você precisa preencher todos os campos",
           NotificationType.ERROR
         );
         return;
       }
-      this.$emit("onEndTask", {
-        description: this.task,
+      emit("onEndTask", {
+        description: description.value,
         time: time,
-        project: this.projects.find((proj) => proj.id == this.projectId),
+        project: projects.value.find((proj) => proj.id == projectId.value),
       });
-      this.task = "";
-      this.projectId = "";
-    },
-  },
-  setup() {
-    const store = useStore();
-    const { notify } = useNotifier();
+      description.value = "";
+      projectId.value = "";
+    };
+
     return {
-      store,
-      notify,
-      projects: computed(() => store.state.projects),
+      description,
+      projectId,
+      projects,
+      endTask,
     };
   },
 });

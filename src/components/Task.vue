@@ -1,6 +1,6 @@
 <template>
   <BoxVue>
-    <div class="columns">
+    <div class="columns clickable" @click="onClick">
       <div class="column is-4">
         <p>{{ task.description || "Tarefa sem descrição" }}</p>
       </div>
@@ -15,13 +15,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, PropType, ref } from "vue";
 import Cronometer from "@/components/Cronometer.vue";
 import ITask from "@/interfaces/ITask";
 import BoxVue from "./Box.vue";
 
 export default defineComponent({
   name: "form-task",
+  emits: ["onClicked"],
   components: {
     Cronometer,
     BoxVue,
@@ -32,6 +33,15 @@ export default defineComponent({
       default: {} as ITask,
       require: true,
     },
+  },
+  setup(props, { emit }) {
+    const onClick = (): void => {
+      emit("onClicked", props.task);
+    };
+
+    return {
+      onClick,
+    };
   },
 });
 </script>
